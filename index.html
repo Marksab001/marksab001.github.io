@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="mr-build" content="1793676283">
+<meta name="mr-build" content="1793676455">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Malleuve & Rousseau</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -113,6 +113,11 @@ section.alt .svc{background:var(--bg)}
 .svc .foot .tag{color:var(--muted);letter-spacing:.08em}
 .svc .ask{background:none;border:0;color:var(--blue-text);font-family:var(--f-display);font-weight:700;cursor:pointer;padding:0}
 .svc .ask:hover{text-decoration:underline}
+.pick{display:flex;flex-direction:column;gap:10px}
+.svc .pick-b{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-family:var(--f-display);font-weight:700;font-size:.95rem;text-align:left;transition:border-color .15s,background-color .15s}
+.svc .pick-b span:last-child{color:var(--accent)}
+.svc .pick-b:hover{text-decoration:none;border-color:var(--brand);background:var(--brand-soft)}
+.pick-h{font-size:.82rem;color:var(--muted)}
 .pill{font-family:var(--f-display);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 10px;border-radius:99px;white-space:nowrap}
 .pill.soon{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
 .svc.is-soon{opacity:.75}
@@ -572,10 +577,10 @@ const EN = {
  "adm.open":"Manage services","adm.tag":"Administration","adm.h2":"Service selector","adm.close":"Close","adm.p":"Active: visible and requestable. Coming soon: visible with a notice, no requests. Hidden: not shown on the site. Changes apply to all visitors.","adm.copy":"Copy configuration","adm.reset":"Reset"
 };
 const UI = {
- es:{soon:"Próximamente",prep:"En preparación",avail:"Disponible",ask:"Solicitar →",other:"Otro / varios servicios",of:" de ",st:[["activo","Activo"],["pronto","Próximamente"],["oculto","Oculto"]],
+ es:{pickh:"Elija una opción",soon:"Próximamente",prep:"En preparación",avail:"Disponible",ask:"Solicitar →",other:"Otro / varios servicios",of:" de ",st:[["activo","Activo"],["pronto","Próximamente"],["oculto","Oculto"]],
      copied:"Copiada",sel:"Texto seleccionado",err:"Complete los campos obligatorios marcados en rojo.",errci:"El carnet de identidad debe tener 11 dígitos.",errnum:"El NIT solo admite números.",errmail:"Revise el correo electrónico.",errok:"Para enviar la solicitud debe autorizar el uso de sus datos.",errtel:"Los números de teléfono deben tener exactamente 8 dígitos.",errvia:"Elija al menos una vía de envío: WhatsApp o correo electrónico.",ready:"Su solicitud está lista. Toque el botón para enviarla:",bwa:"Enviar por WhatsApp",bmail:"Enviar por correo",subj:"Solicitud de cotización",errtelx:"Revise el número de teléfono: debe tener entre 6 y 15 dígitos.",
      res:"Solicitud preparada (vista previa, aún no se envía):",lbl:["Nombre","Teléfono","Tipo de cliente","Servicio","Provincia","Destino"],fase:"Fase"},
- en:{soon:"Coming soon",prep:"In preparation",avail:"Available",ask:"Request →",other:"Other / several services",of:" of ",st:[["activo","Active"],["pronto","Coming soon"],["oculto","Hidden"]],
+ en:{pickh:"Choose an option",soon:"Coming soon",prep:"In preparation",avail:"Available",ask:"Request →",other:"Other / several services",of:" of ",st:[["activo","Active"],["pronto","Coming soon"],["oculto","Hidden"]],
      copied:"Copied",sel:"Text selected",err:"Complete the required fields marked in red.",errci:"The identity card number must have 11 digits.",errnum:"The tax ID accepts numbers only.",errmail:"Check the email address.",errok:"To send the request you must authorize the use of your data.",errtel:"Phone numbers must have exactly 8 digits.",errvia:"Choose at least one way to send it: WhatsApp or email.",ready:"Your request is ready. Tap the button to send it:",bwa:"Send by WhatsApp",bmail:"Send by email",subj:"Quote request",errtelx:"Check the phone number: it must have between 6 and 15 digits.",
      res:"Request prepared (preview, not sent yet):",lbl:["Name","Phone","Client type","Service","Province","Destination"],fase:"Phase"}
 };
@@ -725,9 +730,13 @@ function render(){
     const c=document.createElement("article");
     c.className="svc"+(st==="pronto"?" is-soon":"");
     c.innerHTML='<div class="top"><span class="ico">'+(ICO[s.id]||ICO.def)+'</span>'+(st==="pronto"?'<span class="pill soon">'+t.soon+'</span>':'')+'</div><span class="tag">'+tx.ref+'</span>'+''+
-      '<h3>'+tx.n+'</h3><ul>'+tx.i.map(i=>'<li>'+i+'</li>').join("")+'</ul>'+
-      '<div class="foot"><span class="tag">'+(st==="pronto"?t.prep:t.avail)+'</span>'+
-      (st==="activo"?'<button class="ask" data-id="'+s.id+'">'+t.ask+'</button>':'')+'</div>';
+      '<h3>'+tx.n+'</h3>'+
+      (tx.op&&st==="activo"
+        ? '<div class="pick">'+tx.op.map(([k,n],j)=>'<button type="button" class="ask pick-b" data-id="'+s.id+'-'+k+'"><span>'+tx.i[j]+'</span><span aria-hidden="true">→</span></button>').join("")+'</div>'+
+          '<div class="foot"><span class="tag">'+t.avail+'</span><span class="pick-h">'+t.pickh+'</span></div>'
+        : '<ul>'+tx.i.map(i=>'<li>'+i+'</li>').join("")+'</ul>'+
+          '<div class="foot"><span class="tag">'+(st==="pronto"?t.prep:t.avail)+'</span>'+
+          (st==="activo"?'<button class="ask" data-id="'+s.id+'">'+t.ask+'</button>':'')+'</div>');
     grid.appendChild(c);
   });
   const o=document.createElement("option");o.value="otro";o.textContent=t.other;sel.appendChild(o);
