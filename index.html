@@ -223,6 +223,20 @@ textarea{min-height:120px;resize:vertical}
 .privacy{font-size:.85rem;color:var(--muted);margin:-6px 0 0}
 .req-note{font-size:.85rem;color:var(--muted);font-weight:400;margin:-4px 0 0}
 input.bad,textarea.bad{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}
+
+.contact{grid-template-columns:1fr!important;max-width:880px}
+.ct-lead{color:var(--muted);font-size:1.06rem;margin-top:-12px}
+.via{border:0;margin:0;padding:0;min-width:0}
+.via .step-t{margin-bottom:12px}
+.via-opts{display:flex;gap:10px;flex-wrap:wrap}
+.via-o{flex-direction:row!important;align-items:center;gap:10px!important;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 16px;cursor:pointer;font-weight:600}
+.via-o input{width:18px;height:18px;accent-color:var(--brand)}
+.via-o:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
+.result .ready{font-weight:600;margin:0 0 12px}
+.send-acts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.btn-wa{background:#1F8A4C;color:#fff}
+.btn-mail{background:var(--navy);color:#fff}
+.resumen{margin:0;white-space:pre-wrap;font:inherit;font-size:.9rem;color:var(--muted);background:var(--surface);border-radius:8px;padding:12px}
 .result{grid-column:1/-1;background:var(--brand-soft);border-radius:10px;padding:16px;font-size:.92rem;white-space:pre-wrap}
 
 /* Pie */
@@ -388,12 +402,7 @@ footer .admin-link{background:none;border:1px solid rgba(255,255,255,.3);color:#
     <div>
       <span class="tag" data-i18n="ct.tag">Hablemos de su pedido</span>
       <h2 data-i18n="cta.quote">Solicitar cotización</h2>
-      <div class="channels">
-        <!-- Contactos temporales: sustituir cuando M&R tenga WhatsApp y correo propios -->
-        <div class="ch"><span class="tag" data-i18n="ct.wa">WhatsApp</span><div class="cv"><a class="v" href="https://wa.me/5353914580" target="_blank" rel="noopener">+53 5391 4580</a><button type="button" class="cp" data-copy="+5353914580" data-i18n="ct.copy">Copiar</button></div></div>
-        <div class="ch"><span class="tag" data-i18n="ct.mail">Correo</span><div class="cv"><span class="v">frankjosue.cabrera@gmail.com</span><button type="button" class="cp" data-copy="frankjosue.cabrera@gmail.com" data-i18n="ct.copy">Copiar</button></div></div>
-        <div class="ch"><span class="tag" data-i18n="ct.addr">Dirección</span><div class="v" data-i18n="lg.dom.v">Avenida Cebreco No. 310, entre 11 y 13, Vista Alegre, Santiago de Cuba, Cuba</div></div>
-      </div>
+      <p class="ct-lead" data-i18n="ct.lead">Complete el formulario y envíenos su solicitud por WhatsApp, por correo electrónico o por ambas vías.</p>
     </div>
     <form id="quote" novalidate>
       <fieldset class="full who">
@@ -445,10 +454,17 @@ footer .admin-link{background:none;border:1px solid rgba(255,255,255,.3);color:#
         </select>
       </div>
       <label class="full"><span><span data-i18n="f.msg">Describa la mercancía, el servicio o la obra</span> <em class="req">*</em></span><textarea id="f-msg" required></textarea></label>
+      <fieldset class="full via">
+        <legend class="step-t"><span class="sn">4</span><span data-i18n="f.s4">Enviar por</span></legend>
+        <div class="via-opts">
+          <label class="via-o"><input type="checkbox" id="v-wa" checked><span data-i18n="f.vwa">WhatsApp</span></label>
+          <label class="via-o"><input type="checkbox" id="v-mail" checked><span data-i18n="f.vmail">Correo electrónico</span></label>
+        </div>
+      </fieldset>
       <label class="full consent"><input type="checkbox" id="f-ok"><span><span data-i18n="f.ok">Autorizo a Malleuve &amp; Rousseau S.R.L. a usar estos datos solo para atender mi solicitud.</span> <em class="req">*</em></span></label>
       <p class="full privacy" data-i18n="f.priv">Sus datos se usarán únicamente para gestionar esta solicitud y no se compartirán con terceros sin su autorización, conforme a la legislación cubana de protección de datos personales.</p>
       <p class="full req-note"><em class="req">*</em> <span data-i18n="f.reqn">Campos obligatorios</span></p>
-      <div class="full"><button class="btn btn-primary" type="submit" data-i18n="f.submit">Preparar solicitud</button></div>
+      <div class="full"><button class="btn btn-primary" type="submit" data-i18n="f.submit">Enviar solicitud</button></div>
       <div class="result" id="result" hidden></div>
     </form>
   </div>
@@ -548,16 +564,16 @@ const EN = {
  "co.tag":"Who we are","co.h2":"The company","co.p1":"Malleuve & Rousseau S.R.L. is a Cuban private company engaged in wholesale and retail trade, with import and export as the pillars of its business.",
  "co.p2":"We manage each operation from start to finish: purchasing, documentation, shipping and delivery, so the client has a single point of contact throughout.",
  "lg.razon":"Company name","lg.forma":"Legal form","lg.forma.v":"Limited Liability Company (S.R.L.)","lg.nit":"Tax ID (NIT)","lg.dom":"Registered address","lg.dom.v":"Avenida Cebreco No. 310, between 11 and 13, Vista Alegre, Santiago de Cuba, Cuba","lg.zona":"Operating area","lg.zona.v":"All of Cuba, with an initial focus on the eastern region","pend":"Pending",
- "ct.tag":"Tell us what you need","ct.wa":"WhatsApp","ct.mail":"Email","ct.addr":"Address","ct.copy":"Copy",
- "f.s1":"Applicant type","f.tj":"Legal entity","f.tt":"Natural person (self-employed)","f.tn":"Natural person","f.s2":"General information","f.company":"Company name","f.names":"First and last name(s)","f.nit":"Tax ID (NIT)","f.ci":"Identity card number","f.email":"Email","f.mobile":"Mobile / WhatsApp","f.landline":"Landline","f.s3":"Your request","f.reqn":"Required fields","f.ok":"I authorize Malleuve & Rousseau S.R.L. to use this data only to handle my request.","f.priv":"Your data will be used only to manage this request and will not be shared with third parties without your authorization, in accordance with Cuban personal data protection law.","f.pv0":"Select","f.pvhab":"Havana","f.pvij":"Isla de la Juventud Special Municipality","f.pvx":"Outside Cuba","f.pm":"Port of Mariel","f.ps":"Port of Santiago de Cuba","f.search":"Search country","f.svc":"Service","f.prov":"Province","f.port":"Goods destination","f.p0":"Not applicable","f.p1":"Havana airport","f.p2":"Santiago de Cuba airport","f.msg":"Describe the goods, service or works needed","f.submit":"Prepare request",
+ "ct.tag":"Tell us what you need","ct.lead":"Fill in the form and send us your request by WhatsApp, by email or both.","f.s4":"Send by","f.vwa":"WhatsApp","f.vmail":"Email","ct.wa":"WhatsApp","ct.mail":"Email","ct.addr":"Address","ct.copy":"Copy",
+ "f.s1":"Applicant type","f.tj":"Legal entity","f.tt":"Natural person (self-employed)","f.tn":"Natural person","f.s2":"General information","f.company":"Company name","f.names":"First and last name(s)","f.nit":"Tax ID (NIT)","f.ci":"Identity card number","f.email":"Email","f.mobile":"Mobile / WhatsApp","f.landline":"Landline","f.s3":"Your request","f.reqn":"Required fields","f.ok":"I authorize Malleuve & Rousseau S.R.L. to use this data only to handle my request.","f.priv":"Your data will be used only to manage this request and will not be shared with third parties without your authorization, in accordance with Cuban personal data protection law.","f.pv0":"Select","f.pvhab":"Havana","f.pvij":"Isla de la Juventud Special Municipality","f.pvx":"Outside Cuba","f.pm":"Port of Mariel","f.ps":"Port of Santiago de Cuba","f.search":"Search country","f.svc":"Service","f.prov":"Province","f.port":"Goods destination","f.p0":"Not applicable","f.p1":"Havana airport","f.p2":"Santiago de Cuba airport","f.msg":"Describe the goods, service or works needed","f.submit":"Send request",
  "adm.open":"Manage services","adm.tag":"Administration","adm.h2":"Service selector","adm.close":"Close","adm.p":"Active: visible and requestable. Coming soon: visible with a notice, no requests. Hidden: not shown on the site. Changes apply to all visitors.","adm.copy":"Copy configuration","adm.reset":"Reset"
 };
 const UI = {
  es:{soon:"Próximamente",prep:"En preparación",avail:"Disponible",ask:"Solicitar →",other:"Otro / varios servicios",of:" de ",st:[["activo","Activo"],["pronto","Próximamente"],["oculto","Oculto"]],
-     copied:"Copiada",sel:"Texto seleccionado",err:"Complete los campos obligatorios marcados en rojo.",errci:"El carnet de identidad debe tener 11 dígitos.",errnum:"El NIT solo admite números.",errmail:"Revise el correo electrónico.",errok:"Para enviar la solicitud debe autorizar el uso de sus datos.",errtel:"Los números de teléfono deben tener exactamente 8 dígitos.",errtelx:"Revise el número de teléfono: debe tener entre 6 y 15 dígitos.",
+     copied:"Copiada",sel:"Texto seleccionado",err:"Complete los campos obligatorios marcados en rojo.",errci:"El carnet de identidad debe tener 11 dígitos.",errnum:"El NIT solo admite números.",errmail:"Revise el correo electrónico.",errok:"Para enviar la solicitud debe autorizar el uso de sus datos.",errtel:"Los números de teléfono deben tener exactamente 8 dígitos.",errvia:"Elija al menos una vía de envío: WhatsApp o correo electrónico.",ready:"Su solicitud está lista. Toque el botón para enviarla:",bwa:"Enviar por WhatsApp",bmail:"Enviar por correo",subj:"Solicitud de cotización",errtelx:"Revise el número de teléfono: debe tener entre 6 y 15 dígitos.",
      res:"Solicitud preparada (vista previa, aún no se envía):",lbl:["Nombre","Teléfono","Tipo de cliente","Servicio","Provincia","Destino"],fase:"Fase"},
  en:{soon:"Coming soon",prep:"In preparation",avail:"Available",ask:"Request →",other:"Other / several services",of:" of ",st:[["activo","Active"],["pronto","Coming soon"],["oculto","Hidden"]],
-     copied:"Copied",sel:"Text selected",err:"Complete the required fields marked in red.",errci:"The identity card number must have 11 digits.",errnum:"The tax ID accepts numbers only.",errmail:"Check the email address.",errok:"To send the request you must authorize the use of your data.",errtel:"Phone numbers must have exactly 8 digits.",errtelx:"Check the phone number: it must have between 6 and 15 digits.",
+     copied:"Copied",sel:"Text selected",err:"Complete the required fields marked in red.",errci:"The identity card number must have 11 digits.",errnum:"The tax ID accepts numbers only.",errmail:"Check the email address.",errok:"To send the request you must authorize the use of your data.",errtel:"Phone numbers must have exactly 8 digits.",errvia:"Choose at least one way to send it: WhatsApp or email.",ready:"Your request is ready. Tap the button to send it:",bwa:"Send by WhatsApp",bmail:"Send by email",subj:"Quote request",errtelx:"Check the phone number: it must have between 6 and 15 digits.",
      res:"Request prepared (preview, not sent yet):",lbl:["Name","Phone","Client type","Service","Province","Destination"],fase:"Phase"}
 };
 
@@ -637,6 +653,8 @@ function ddEnhance(sel,opts={}){
   ddRefresh(sel);
 }
 document.addEventListener("click",e=>{if(!e.target.closest(".dd"))ddClose()});
+/* Vías de envío por defecto (temporales hasta que M&R tenga WhatsApp y correo propios) */
+const MR_CONTACTO={whatsapp:"5353914580",correo:"frankjosue.cabrera@gmail.com"};
 const KEY="mr-servicios", LKEY="mr-lang";
 let estado={}, lang="es";
 function porDefecto(){const o={};SERVICIOS.forEach(s=>o[s.id]=s.estado);return o}
@@ -790,6 +808,7 @@ document.getElementById("quote").addEventListener("submit",e=>{
   if(tipo==="nat"&&v("f-ci").length!==11){el("f-ci").classList.add("bad");out.textContent=t.errci;el("f-ci").focus();return}
   if(v("f-email")&&!el("f-email").checkValidity()){el("f-email").classList.add("bad");out.textContent=t.errmail;el("f-email").focus();return}
   if(!el("f-ok").checked){el("f-ok").closest("label").classList.add("bad");out.textContent=t.errok;el("f-ok").focus();return}
+  if(!el("v-wa").checked&&!el("v-mail").checked){out.textContent=t.errvia;el("v-wa").focus();return}
   const tipoTxt=document.querySelector('input[name="tipo"]:checked').closest("label").querySelector("b").textContent;
   const lines=[
     [document.querySelector(".who legend [data-i18n]").textContent,tipoTxt],
@@ -802,7 +821,17 @@ document.getElementById("quote").addEventListener("submit",e=>{
     [lbl("f-prov"),v("f-prov")?txt("f-prov"):"—"],
     [lbl("f-port"),txt("f-port")]
   ];
-  out.textContent=t.res+"\n\n"+lines.map(([k,x])=>k+": "+x).join("\n")+"\n\n"+v("f-msg");
+  const cuerpo=t.subj+" — Malleuve & Rousseau S.R.L.\n\n"+lines.map(([k,x])=>k+": "+x).join("\n")+"\n\n"+v("f-msg");
+  const quien=tipo==="jur"?v("f-company"):v("f-names");
+  out.innerHTML="";
+  const p=document.createElement("p");p.className="ready";p.textContent=t.ready;out.appendChild(p);
+  const acts=document.createElement("div");acts.className="send-acts";
+  if(el("v-wa").checked){const a=document.createElement("a");a.className="btn btn-wa";a.target="_blank";a.rel="noopener";
+    a.href="https://wa.me/"+MR_CONTACTO.whatsapp+"?text="+encodeURIComponent(cuerpo);a.textContent=t.bwa;acts.appendChild(a)}
+  if(el("v-mail").checked){const a=document.createElement("a");a.className="btn btn-mail";
+    a.href="mailto:"+MR_CONTACTO.correo+"?subject="+encodeURIComponent(t.subj+" — "+quien)+"&body="+encodeURIComponent(cuerpo);a.textContent=t.bmail;acts.appendChild(a)}
+  out.appendChild(acts);
+  const pre=document.createElement("pre");pre.className="resumen";pre.textContent=cuerpo;out.appendChild(pre);
 });
 
 cargar();buildCountries();
