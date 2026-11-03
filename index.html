@@ -557,10 +557,10 @@ const EN = {
 };
 const UI = {
  es:{soon:"Próximamente",prep:"En preparación",avail:"Disponible",ask:"Solicitar →",other:"Otro / varios servicios",of:" de ",st:[["activo","Activo"],["pronto","Próximamente"],["oculto","Oculto"]],
-     copied:"Copiada",sel:"Texto seleccionado",err:"Complete los campos obligatorios marcados en rojo.",errci:"El carnet de identidad debe tener 11 dígitos.",errnum:"El NIT solo admite números.",errmail:"Revise el correo electrónico.",errok:"Para enviar la solicitud debe autorizar el uso de sus datos.",
+     copied:"Copiada",sel:"Texto seleccionado",err:"Complete los campos obligatorios marcados en rojo.",errci:"El carnet de identidad debe tener 11 dígitos.",errnum:"El NIT solo admite números.",errmail:"Revise el correo electrónico.",errok:"Para enviar la solicitud debe autorizar el uso de sus datos.",errtel:"Los números de teléfono de Cuba deben tener exactamente 8 dígitos.",errtelx:"Revise el número de teléfono: debe tener entre 6 y 15 dígitos.",
      res:"Solicitud preparada (vista previa, aún no se envía):",lbl:["Nombre","Teléfono","Tipo de cliente","Servicio","Provincia","Destino"],fase:"Fase"},
  en:{soon:"Coming soon",prep:"In preparation",avail:"Available",ask:"Request →",other:"Other / several services",of:" of ",st:[["activo","Active"],["pronto","Coming soon"],["oculto","Hidden"]],
-     copied:"Copied",sel:"Text selected",err:"Complete the required fields marked in red.",errci:"The identity card number must have 11 digits.",errnum:"The tax ID accepts numbers only.",errmail:"Check the email address.",errok:"To send the request you must authorize the use of your data.",
+     copied:"Copied",sel:"Text selected",err:"Complete the required fields marked in red.",errci:"The identity card number must have 11 digits.",errnum:"The tax ID accepts numbers only.",errmail:"Check the email address.",errok:"To send the request you must authorize the use of your data.",errtel:"Cuban phone numbers must have exactly 8 digits.",errtelx:"Check the phone number: it must have between 6 and 15 digits.",
      res:"Request prepared (preview, not sent yet):",lbl:["Name","Phone","Client type","Service","Province","Destination"],fase:"Phase"}
 };
 
@@ -690,6 +690,7 @@ function aplicarIdioma(){
   document.getElementById("steps").style.setProperty("--fase",'"'+UI[lang].fase+' "');
   ["es","en"].forEach(l=>document.getElementById("lang-"+l).setAttribute("aria-pressed",l===lang));
   buildCountries();
+  if(typeof TEL!=="undefined")TEL.forEach(([cc,ph])=>limTel(cc,ph));
   render();
 }
 
@@ -771,6 +772,10 @@ function aplicarTipo(){
 }
 document.querySelectorAll('input[name="tipo"]').forEach(r=>r.addEventListener("change",()=>{aplicarTipo();document.getElementById("result").hidden=true}));
 ["f-nit","f-ci"].forEach(id=>document.getElementById(id).addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"")}));
+/* Teléfonos: solo números; con Cuba (+53) exactamente 8 dígitos, con otros países hasta 15 */
+const TEL=[["f-cc","f-phone"],["f-cc2","f-phone2"]];
+function limTel(cc,ph){const max=document.getElementById(cc).value==="CU"?8:15;const i=document.getElementById(ph);i.maxLength=max;i.placeholder=max===8?"8 dígitos".replace("dígitos",lang==="en"?"digits":"dígitos"):"";i.value=i.value.replace(/\D/g,"").slice(0,max)}
+TEL.forEach(([cc,ph])=>{document.getElementById(ph).addEventListener("input",()=>limTel(cc,ph));document.getElementById(cc).addEventListener("change",()=>limTel(cc,ph));limTel(cc,ph)});
 document.getElementById("quote").addEventListener("submit",e=>{
   e.preventDefault();
   const t=UI[lang], tipo=tipoSel();
@@ -784,6 +789,7 @@ document.getElementById("quote").addEventListener("submit",e=>{
   const falt=req.filter(id=>!v(id));
   falt.forEach(id=>el(id).classList.add("bad"));
   if(falt.length){out.textContent=t.err;el(falt[0]).focus();return}
+  for(const [cc,ph] of TEL){const n=v(ph);if(!n)continue;const cu=el(cc).value==="CU";if(cu?n.length!==8:(n.length<6||n.length>15)){el(ph).classList.add("bad");out.textContent=cu?t.errtel:t.errtelx;el(ph).focus();return}}
   if(tipo==="nat"&&v("f-ci").length!==11){el("f-ci").classList.add("bad");out.textContent=t.errci;el("f-ci").focus();return}
   if(v("f-email")&&!el("f-email").checkValidity()){el("f-email").classList.add("bad");out.textContent=t.errmail;el("f-email").focus();return}
   if(!el("f-ok").checked){el("f-ok").closest("label").classList.add("bad");out.textContent=t.errok;el("f-ok").focus();return}
