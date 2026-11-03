@@ -199,6 +199,26 @@ textarea{min-height:120px;resize:vertical}
 .dd-list li[role="option"]:hover,.dd-list li[role="option"]:focus{outline:none;background:var(--brand-soft)}
 .dd-list li[aria-selected="true"]{color:var(--blue-text);font-weight:600}
 .dd-list li.sep{height:1px;background:var(--line);margin:6px 8px}
+
+/* Tipo de solicitante y pasos */
+.who{border:0;margin:0;padding:0;min-width:0}
+.step-t{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:1.02rem;color:var(--ink);padding:0;margin:6px 0 2px}
+.step-t .sn{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:.85rem;flex-shrink:0}
+.who .step-t{margin-bottom:14px}
+.who-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:1100px){.who-opts{grid-template-columns:1fr}}
+.who-o{position:relative;display:block;cursor:pointer}
+.who-o input{position:absolute;opacity:0;pointer-events:none}
+.who-o>span{display:flex;flex-direction:column;gap:3px;height:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:14px 16px 14px 44px;transition:border-color .15s,background-color .15s}
+.who-o>span::before{content:"";position:absolute;left:16px;top:17px;width:16px;height:16px;border-radius:50%;border:2px solid var(--muted);background:var(--surface)}
+.who-o input:checked+span{border-color:var(--brand);background:var(--brand-soft)}
+.who-o input:checked+span::before{border-color:var(--brand);box-shadow:inset 0 0 0 3px var(--surface);background:var(--brand)}
+.who-o input:focus-visible+span{outline:3px solid var(--brand);outline-offset:2px}
+.who-o b{font-family:var(--f-display);font-size:.98rem}
+.who-o small{color:var(--muted);font-weight:400;font-size:.85rem;line-height:1.35}
+.req{color:var(--accent);font-style:normal;font-weight:700}
+.req-note{font-size:.85rem;color:var(--muted);font-weight:400;margin:-4px 0 0}
+input.bad,textarea.bad{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}
 .result{grid-column:1/-1;background:var(--brand-soft);border-radius:10px;padding:16px;font-size:.92rem;white-space:pre-wrap}
 
 /* Pie */
@@ -372,19 +392,33 @@ footer .admin-link{background:none;border:1px solid rgba(255,255,255,.3);color:#
       </div>
     </div>
     <form id="quote" novalidate>
-      <label><span data-i18n="f.name">Nombre</span><input id="f-name" required autocomplete="name"></label>
-      <div class="field"><span id="l-phone" data-i18n="f.phone">Teléfono</span>
+      <fieldset class="full who">
+        <legend class="step-t"><span class="sn">1</span><span data-i18n="f.s1">Tipo de solicitante</span></legend>
+        <div class="who-opts">
+          <label class="who-o"><input type="radio" name="tipo" value="jur" id="t-jur" checked><span><b data-i18n="f.tj">Persona jurídica</b><small data-i18n="f.tjd">MIPYME, empresa privada o empresa estatal</small></span></label>
+          <label class="who-o"><input type="radio" name="tipo" value="tcp" id="t-tcp"><span><b data-i18n="f.tt">Persona natural (TCP)</b><small data-i18n="f.ttd">Trabajador por cuenta propia</small></span></label>
+          <label class="who-o"><input type="radio" name="tipo" value="nat" id="t-nat"><span><b data-i18n="f.tn">Persona natural</b><small data-i18n="f.tnd">Persona que no es trabajador por cuenta propia</small></span></label>
+        </div>
+      </fieldset>
+      <div class="full step-t"><span class="sn">2</span><span data-i18n="f.s2">Información general</span></div>
+      <label class="full" data-for="jur"><span><span data-i18n="f.company">Nombre de la compañía</span> <em class="req">*</em></span><input id="f-company" autocomplete="organization"></label>
+      <label class="full" data-for="tcp nat" hidden><span><span data-i18n="f.names">Nombre(s) y apellidos</span> <em class="req">*</em></span><input id="f-names" autocomplete="name"></label>
+      <label data-for="jur tcp"><span><span data-i18n="f.nit">NIT</span> <em class="req">*</em></span><input id="f-nit" inputmode="numeric" autocomplete="off" maxlength="15"></label>
+      <label data-for="nat" hidden><span><span data-i18n="f.ci">No. de carnet de identidad</span> <em class="req">*</em></span><input id="f-ci" inputmode="numeric" autocomplete="off" maxlength="11"></label>
+      <label><span data-i18n="f.email">Correo electrónico</span><input id="f-email" type="email" autocomplete="email"></label>
+      <div class="field"><span id="l-phone"><span data-i18n="f.mobile">Teléfono móvil / WhatsApp</span> <em class="req">*</em></span>
         <div class="phone">
           <select id="f-cc" hidden aria-labelledby="l-phone"></select>
           <input id="f-phone" type="tel" autocomplete="tel-national" inputmode="tel" aria-labelledby="l-phone">
         </div>
       </div>
-      <div class="field full"><span id="l-type" data-i18n="f.type">Tipo de cliente</span>
-        <select id="f-type" hidden aria-labelledby="l-type">
-          <option value="natural" data-i18n="f.t1">Persona natural</option>
-          <option value="juridica" data-i18n="f.t2">Persona jurídica</option>
-        </select>
+      <div class="field"><span id="l-phone2" data-i18n="f.landline">Teléfono fijo</span>
+        <div class="phone">
+          <select id="f-cc2" hidden aria-labelledby="l-phone2"></select>
+          <input id="f-phone2" type="tel" inputmode="tel" aria-labelledby="l-phone2">
+        </div>
       </div>
+      <div class="full step-t"><span class="sn">3</span><span data-i18n="f.s3">Su solicitud</span></div>
       <div class="field full"><span id="l-svc" data-i18n="f.svc">Servicio</span><select id="f-svc" hidden aria-labelledby="l-svc"></select></div>
       <div class="field"><span id="l-prov" data-i18n="f.prov">Provincia</span>
         <select id="f-prov" hidden aria-labelledby="l-prov">
@@ -397,7 +431,7 @@ footer .admin-link{background:none;border:1px solid rgba(255,255,255,.3);color:#
           <option value="Fuera de Cuba" data-i18n="f.pvx">Fuera de Cuba</option>
         </select>
       </div>
-      <div class="field"><span id="l-port" data-i18n="f.port">Puerto o aeropuerto de destino (si importa)</span>
+      <div class="field"><span id="l-port" data-i18n="f.port">Destino de la mercancía</span>
         <select id="f-port" hidden aria-labelledby="l-port">
           <option value="na" data-i18n="f.p0">No aplica</option>
           <option value="mariel" data-i18n="f.pm">Puerto Mariel</option>
@@ -406,7 +440,8 @@ footer .admin-link{background:none;border:1px solid rgba(255,255,255,.3);color:#
           <option value="aero-scu" data-i18n="f.p2">Aeropuerto Santiago de Cuba</option>
         </select>
       </div>
-      <label class="full"><span data-i18n="f.msg">Describa la mercancía, el servicio o la obra</span><textarea id="f-msg" required></textarea></label>
+      <label class="full"><span><span data-i18n="f.msg">Describa la mercancía, el servicio o la obra</span> <em class="req">*</em></span><textarea id="f-msg" required></textarea></label>
+      <p class="full req-note"><em class="req">*</em> <span data-i18n="f.reqn">Campos obligatorios</span></p>
       <div class="full"><button class="btn btn-primary" type="submit" data-i18n="f.submit">Preparar solicitud</button></div>
       <div class="result" id="result" hidden></div>
     </form>
@@ -511,15 +546,15 @@ const EN = {
  "co.p2":"We manage each operation from start to finish: purchasing, documentation, shipping and delivery, so the client has a single point of contact throughout.",
  "lg.razon":"Company name","lg.forma":"Legal form","lg.forma.v":"Limited Liability Company (S.R.L.)","lg.nit":"Tax ID (NIT)","lg.dom":"Registered address","lg.dom.v":"Avenida Cebreco No. 310, between 11 and 13, Vista Alegre, Santiago de Cuba, Cuba","lg.zona":"Operating area","lg.zona.v":"All of Cuba, with an initial focus on the eastern region","pend":"Pending",
  "ct.tag":"Tell us what you need","ct.wa":"WhatsApp","ct.mail":"Email","ct.addr":"Address","ct.copy":"Copy",
- "f.name":"Name","f.phone":"Phone","f.type":"Client type","f.t1":"Individual (natural person)","f.t2":"Legal entity","f.pv0":"Select","f.pvhab":"Havana","f.pvij":"Isla de la Juventud Special Municipality","f.pvx":"Outside Cuba","f.pm":"Port of Mariel","f.ps":"Port of Santiago de Cuba","f.search":"Search country","f.svc":"Service","f.prov":"Province","f.port":"Destination port or airport (if importing)","f.p0":"Not applicable","f.p1":"Havana airport","f.p2":"Santiago de Cuba airport","f.msg":"Describe the goods, service or works needed","f.submit":"Prepare request",
+ "f.s1":"Applicant type","f.tj":"Legal entity","f.tjd":"MSME, private company or state company","f.tt":"Natural person (self-employed)","f.ttd":"Self-employed worker (TCP)","f.tn":"Natural person","f.tnd":"Person who is not self-employed","f.s2":"General information","f.company":"Company name","f.names":"First and last name(s)","f.nit":"Tax ID (NIT)","f.ci":"Identity card number","f.email":"Email","f.mobile":"Mobile / WhatsApp","f.landline":"Landline","f.s3":"Your request","f.reqn":"Required fields","f.pv0":"Select","f.pvhab":"Havana","f.pvij":"Isla de la Juventud Special Municipality","f.pvx":"Outside Cuba","f.pm":"Port of Mariel","f.ps":"Port of Santiago de Cuba","f.search":"Search country","f.svc":"Service","f.prov":"Province","f.port":"Goods destination","f.p0":"Not applicable","f.p1":"Havana airport","f.p2":"Santiago de Cuba airport","f.msg":"Describe the goods, service or works needed","f.submit":"Prepare request",
  "adm.open":"Manage services","adm.tag":"Administration","adm.h2":"Service selector","adm.close":"Close","adm.p":"Active: visible and requestable. Coming soon: visible with a notice, no requests. Hidden: not shown on the site. Changes apply to all visitors.","adm.copy":"Copy configuration","adm.reset":"Reset"
 };
 const UI = {
  es:{soon:"Próximamente",prep:"En preparación",avail:"Disponible",ask:"Solicitar →",other:"Otro / varios servicios",of:" de ",st:[["activo","Activo"],["pronto","Próximamente"],["oculto","Oculto"]],
-     copied:"Copiada",sel:"Texto seleccionado",err:"Escriba su nombre y una descripción de lo que necesita para preparar la solicitud.",
+     copied:"Copiada",sel:"Texto seleccionado",err:"Complete los campos obligatorios marcados en rojo.",errci:"El carnet de identidad debe tener 11 dígitos.",errnum:"El NIT solo admite números.",errmail:"Revise el correo electrónico.",
      res:"Solicitud preparada (vista previa, aún no se envía):",lbl:["Nombre","Teléfono","Tipo de cliente","Servicio","Provincia","Destino"],fase:"Fase"},
  en:{soon:"Coming soon",prep:"In preparation",avail:"Available",ask:"Request →",other:"Other / several services",of:" of ",st:[["activo","Active"],["pronto","Coming soon"],["oculto","Hidden"]],
-     copied:"Copied",sel:"Text selected",err:"Enter your name and a description of what you need to prepare the request.",
+     copied:"Copied",sel:"Text selected",err:"Complete the required fields marked in red.",errci:"The identity card number must have 11 digits.",errnum:"The tax ID accepts numbers only.",errmail:"Check the email address.",
      res:"Request prepared (preview, not sent yet):",lbl:["Name","Phone","Client type","Service","Province","Destination"],fase:"Phase"}
 };
 
@@ -533,10 +568,10 @@ const FLAGS={"ad":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAeCAYAAAB
 const TOP_CC=["CU","CN","US","ES","MX","PA","JM"];
 function dial(p){return "+"+(p.length===4&&p[0]==="1"?"1 "+p.slice(1):p)}
 function nombrePais(code,fallback){try{const dn=new Intl.DisplayNames([lang],{type:"region"});const n=dn.of(code);return n&&n!==code?n:fallback}catch(e){return fallback}}
-let ccSel="CU";
-function buildCountries(){
-  const sel=document.getElementById("f-cc"); if(!sel)return;
-  ccSel=sel.value||ccSel; sel.innerHTML="";
+function buildCountries(){["f-cc","f-cc2"].forEach(buildCountriesFor)}
+function buildCountriesFor(id){
+  const sel=document.getElementById(id); if(!sel)return;
+  const ccSel=sel.value||"CU"; sel.innerHTML="";
   const items=CC.map(([c,p,n])=>({c,p,n:nombrePais(c,n)}));
   const top=TOP_CC.map(c=>items.find(i=>i.c===c)).filter(Boolean);
   const rest=items.filter(i=>!TOP_CC.includes(i.c)).sort((a,b)=>a.n.localeCompare(b.n,lang));
@@ -552,7 +587,7 @@ const DD=new Map();
 function flagImg(code){return FLAGS[code]?'<img class="flag" alt="" src="'+FLAGS[code]+'">':''}
 function ddLabel(sel){
   const o=sel.options[sel.selectedIndex]; if(!o)return "";
-  if(o.dataset.flag)return flagImg(o.dataset.flag)+'<span>'+(sel.id==="f-cc"?o.dataset.short:o.textContent)+'</span>';
+  if(o.dataset.flag)return flagImg(o.dataset.flag)+'<span>'+(sel.id.startsWith("f-cc")?o.dataset.short:o.textContent)+'</span>';
   return '<span'+(o.value===""?' class="ph"':'')+'>'+o.textContent+'</span>';
 }
 function ddClose(except){DD.forEach(d=>{if(d!==except&&!d.panel.hidden){d.panel.hidden=true;d.btn.setAttribute("aria-expanded","false")}})}
@@ -700,7 +735,7 @@ document.getElementById("svcGrid").addEventListener("click",e=>{
   const b=e.target.closest(".ask");if(!b)return;
   document.getElementById("f-svc").value=b.dataset.id;ddRefresh(document.getElementById("f-svc"));
   document.getElementById("contacto").scrollIntoView({behavior:"smooth"});
-  document.getElementById("f-name").focus({preventScroll:true});
+  (document.querySelector("#quote [data-for]:not([hidden]) input")||document.getElementById("f-msg")).focus({preventScroll:true});
 });
 const drawer=document.getElementById("drawer");
 const abrirAdmin=()=>{drawer.hidden=false;aviso(cfgRef?"":"off");document.getElementById("closeAdmin").focus()};
@@ -723,22 +758,47 @@ const menuBtn=document.getElementById("menuBtn"),nav=document.getElementById("na
 menuBtn.onclick=()=>{const o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)};
 nav.addEventListener("click",e=>{if(e.target.tagName==="A"){nav.classList.remove("open");menuBtn.setAttribute("aria-expanded","false")}});
 
+function tipoSel(){return document.querySelector('input[name="tipo"]:checked').value}
+function aplicarTipo(){
+  const t=tipoSel();
+  document.querySelectorAll("#quote [data-for]").forEach(el=>{el.hidden=!el.dataset.for.split(" ").includes(t)});
+}
+document.querySelectorAll('input[name="tipo"]').forEach(r=>r.addEventListener("change",()=>{aplicarTipo();document.getElementById("result").hidden=true}));
+["f-nit","f-ci"].forEach(id=>document.getElementById(id).addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"")}));
 document.getElementById("quote").addEventListener("submit",e=>{
   e.preventDefault();
-  const t=UI[lang];
-  const v=id=>document.getElementById(id).value.trim();
-  const txt=id=>{const s=document.getElementById(id);return s.options[s.selectedIndex].text};
-  const out=document.getElementById("result");
-  out.hidden=false;
-  if(!v("f-name")||!v("f-msg")){out.textContent=t.err;return}
-  const L=t.lbl;
-  out.textContent=t.res+"\n\n"+L[0]+": "+v("f-name")+"\n"+L[1]+": "+(v("f-phone")?document.getElementById("f-cc").selectedOptions[0].dataset.short+" "+v("f-phone"):"—")+"\n"+L[2]+": "+txt("f-type")+
-    "\n"+L[3]+": "+txt("f-svc")+"\n"+L[4]+": "+(v("f-prov")?txt("f-prov"):"—")+"\n"+L[5]+": "+txt("f-port")+"\n\n"+v("f-msg");
+  const t=UI[lang], tipo=tipoSel();
+  const el=id=>document.getElementById(id), v=id=>el(id).value.trim();
+  const txt=id=>{const s=el(id);return s.options[s.selectedIndex].text};
+  const lbl=id=>{const l=el(id).closest("label,.field");return l.querySelector("[data-i18n]").textContent};
+  const tel=(cc,ph)=>v(ph)?el(cc).selectedOptions[0].dataset.short+" "+v(ph):"—";
+  const out=el("result"); out.hidden=false;
+  const req=[tipo==="jur"?"f-company":"f-names", tipo==="nat"?"f-ci":"f-nit","f-phone","f-msg"];
+  document.querySelectorAll("#quote .bad").forEach(x=>x.classList.remove("bad"));
+  const falt=req.filter(id=>!v(id));
+  falt.forEach(id=>el(id).classList.add("bad"));
+  if(falt.length){out.textContent=t.err;el(falt[0]).focus();return}
+  if(tipo==="nat"&&v("f-ci").length!==11){el("f-ci").classList.add("bad");out.textContent=t.errci;el("f-ci").focus();return}
+  if(v("f-email")&&!el("f-email").checkValidity()){el("f-email").classList.add("bad");out.textContent=t.errmail;el("f-email").focus();return}
+  const tipoTxt=document.querySelector('input[name="tipo"]:checked').closest("label").querySelector("b").textContent;
+  const lines=[
+    [document.querySelector(".who legend [data-i18n]").textContent,tipoTxt],
+    tipo==="jur"?[lbl("f-company"),v("f-company")]:[lbl("f-names"),v("f-names")],
+    tipo==="nat"?[lbl("f-ci"),v("f-ci")]:[lbl("f-nit"),v("f-nit")],
+    [lbl("f-phone"),tel("f-cc","f-phone")],
+    [lbl("f-phone2"),tel("f-cc2","f-phone2")],
+    [lbl("f-email"),v("f-email")||"—"],
+    [lbl("f-svc"),txt("f-svc")],
+    [lbl("f-prov"),v("f-prov")?txt("f-prov"):"—"],
+    [lbl("f-port"),txt("f-port")]
+  ];
+  out.textContent=t.res+"\n\n"+lines.map(([k,x])=>k+": "+x).join("\n")+"\n\n"+v("f-msg");
 });
 
 cargar();buildCountries();
-["f-type","f-svc","f-prov","f-port"].forEach(id=>ddEnhance(document.getElementById(id)));
-ddEnhance(document.getElementById("f-cc"),{search:true,compact:true});
+["f-svc","f-prov","f-port"].forEach(id=>ddEnhance(document.getElementById(id)));
+["f-cc","f-cc2"].forEach(id=>ddEnhance(document.getElementById(id),{search:true,compact:true}));
+aplicarTipo();
 aplicarIdioma();
 </script>
 
