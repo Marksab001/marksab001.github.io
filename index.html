@@ -503,8 +503,8 @@ footer .admin-link{background:none;border:1px solid rgba(255,255,255,.3);color:#
    Para añadir un servicio futuro, agregue un objeto con textos en español (es) e inglés (en). */
 const SERVICIOS = [
   {id:"comercializacion", estado:"activo",
-   es:{n:"Comercialización", ref:"Comercio", i:["Comercio mayorista","Comercio minorista"]},
-   en:{n:"Trade", ref:"Commerce", i:["Wholesale trade","Retail trade"]}},
+   es:{n:"Comercialización", ref:"Comercio", i:["Comercio mayorista","Comercio minorista"], op:[["mayorista","Comercialización mayorista"],["minorista","Comercialización minorista"]]},
+   en:{n:"Trade", ref:"Commerce", i:["Wholesale trade","Retail trade"], op:[["mayorista","Wholesale trade"],["minorista","Retail trade"]]}},
   {id:"importacion", estado:"activo", seccion:"importacion",
    es:{n:"Importación y suministros", ref:"Comercio exterior", i:["Gestión de embarque y documentación","Gestión comercial y documentación de importación","FOB China","CIF Mariel","CIF Santiago de Cuba","CIP La Habana y CIP Santiago de Cuba (carga aérea)"]},
    en:{n:"Import and supply", ref:"Foreign trade", i:["Shipping and documentation management","Commercial management and import documentation","FOB China","CIF Mariel","CIF Santiago de Cuba","CIP Havana and CIP Santiago de Cuba (air cargo)"]}},
@@ -718,7 +718,7 @@ function render(){
     const st=estado[s.id], tx=s[lang];
     if(s.seccion){document.querySelectorAll('[data-sec="'+s.seccion+'"]').forEach(el=>el.hidden=(st==="oculto"))}
     if(st==="oculto"||s.soloSeccion)return;
-    if(st==="activo"){activos++;const o=document.createElement("option");o.value=s.id;o.textContent=tx.n;sel.appendChild(o)}
+    if(st==="activo"){activos++;(tx.op||[[null,tx.n]]).forEach(([k,n])=>{const o=document.createElement("option");o.value=k?s.id+"-"+k:s.id;o.textContent=n;sel.appendChild(o)})}
     const c=document.createElement("article");
     c.className="svc"+(st==="pronto"?" is-soon":"");
     c.innerHTML='<div class="top"><span class="ico">'+(ICO[s.id]||ICO.def)+'</span>'+(st==="pronto"?'<span class="pill soon">'+t.soon+'</span>':'')+'</div><span class="tag">'+tx.ref+'</span>'+''+
@@ -755,7 +755,7 @@ document.getElementById("rows").addEventListener("click",e=>{
 });
 document.getElementById("svcGrid").addEventListener("click",e=>{
   const b=e.target.closest(".ask");if(!b)return;
-  document.getElementById("f-svc").value=b.dataset.id;ddRefresh(document.getElementById("f-svc"));
+  const fs=document.getElementById("f-svc");fs.value=b.dataset.id;if(fs.selectedIndex<0||fs.value!==b.dataset.id){const o=[...fs.options].find(x=>x.value.startsWith(b.dataset.id+"-"));if(o)fs.value=o.value}ddRefresh(document.getElementById("f-svc"));
   document.getElementById("contacto").scrollIntoView({behavior:"smooth"});
   (document.querySelector("#quote [data-for]:not([hidden]) input")||document.getElementById("f-msg")).focus({preventScroll:true});
 });
