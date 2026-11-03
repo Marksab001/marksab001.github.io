@@ -103,13 +103,13 @@ section.alt{background:var(--soft)}
 .note{margin-top:16px;font-size:.9rem;color:var(--muted)}
 
 /* Importación */
-.routes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:40px}
 .route{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .route .code{font-family:var(--f-mono);font-size:1.6rem;font-weight:500;color:var(--blue-text)}
 
 .route h3{margin:6px 0 8px}
 .route p{color:var(--muted);font-size:.95rem}
-@media (max-width:1000px){.routes{grid-template-columns:1fr 1fr}}
+@media (max-width:1000px){.routes{grid-template-columns:1fr 1fr}.route:last-child:nth-child(odd){grid-column:1/-1}}
 @media (max-width:560px){.routes{grid-template-columns:1fr}}
 .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:s;border-top:3px solid var(--steel)}
 .steps li{list-style:none;padding:16px 16px 0 0;counter-increment:s}
@@ -257,7 +257,8 @@ nav{margin-left:12px}
       <div class="route"><span class="code">FOB China</span><h3 data-i18n="imp.r1">Origen</h3><p data-i18n="imp.r1d">Compra al fabricante con la mercancía cargada en el puerto de embarque. Validamos fabricante, certificaciones y muestras antes de comprar.</p></div>
       <div class="route"><span class="code">CIF Mariel</span><h3 data-i18n="imp.r2">Occidente</h3><p data-i18n="imp.r2d">Costo, seguro y flete hasta la Zona Especial de Desarrollo Mariel.</p></div>
       <div class="route"><span class="code">CIF Santiago</span><h3 data-i18n="imp.r3">Oriente</h3><p data-i18n="imp.r3d">Costo, seguro y flete hasta el puerto de Santiago de Cuba.</p></div>
-      <div class="route"><span class="code">Exportación</span><h3 data-i18n="imp.r4">Salida desde Cuba</h3><p data-i18n="imp.r4d">Embarque de productos cubanos desde Mariel o Santiago de Cuba, con la documentación y el flete gestionados por nosotros.</p></div>
+      <div class="route"><span class="code">Carga aérea</span><h3 data-i18n="imp.r5">La Habana · Santiago de Cuba</h3><p data-i18n="imp.r5d">Envíos urgentes o de alto valor por vía aérea hasta los aeropuertos de La Habana o Santiago de Cuba, con la documentación y el flete gestionados por nosotros.</p></div>
+      <div class="route"><span class="code" data-i18n="imp.r4c">Exportación</span><h3 data-i18n="imp.r4">Salida desde Cuba</h3><p data-i18n="imp.r4d">Embarque de productos cubanos desde Mariel o Santiago de Cuba, con la documentación y el flete gestionados por nosotros.</p></div>
     </div>
     <ol class="steps" id="steps">
       <li><b data-i18n="st.1">Requerimiento</b><span data-i18n="st.1d">Especificación técnica y cantidades</span></li>
@@ -345,11 +346,13 @@ nav{margin-left:12px}
       </label>
       <label class="full"><span data-i18n="f.svc">Servicio</span><select id="f-svc"></select></label>
       <label><span data-i18n="f.prov">Provincia</span><input id="f-prov"></label>
-      <label><span data-i18n="f.port">Puerto de destino (si importa)</span>
+      <label><span data-i18n="f.port">Puerto o aeropuerto de destino (si importa)</span>
         <select id="f-port">
           <option value="na" data-i18n="f.p0">No aplica</option>
           <option value="mariel">CIF Mariel</option>
           <option value="santiago">CIF Santiago de Cuba</option>
+          <option value="aero-hav" data-i18n="f.p1">Aeropuerto de La Habana</option>
+          <option value="aero-scu" data-i18n="f.p2">Aeropuerto de Santiago de Cuba</option>
         </select>
       </label>
       <label class="full"><span data-i18n="f.msg">Describa la mercancía, el servicio o la obra</span><textarea id="f-msg" required></textarea></label>
@@ -398,8 +401,8 @@ const SERVICIOS = [
    es:{n:"Comercialización minorista", ref:"Comercialización", i:["Venta directa a personas naturales"]},
    en:{n:"Retail trade", ref:"Trade", i:["Direct sales to individuals"]}},
   {id:"importacion", estado:"activo", seccion:"importacion",
-   es:{n:"Importación y suministros", ref:"Comercio exterior", i:["Gestión de embarque y documentación","Gestión comercial y documentación de importación","FOB China","CIF Mariel","CIF Santiago de Cuba"]},
-   en:{n:"Import and supply", ref:"Foreign trade", i:["Shipping and documentation management","Commercial management and import documentation","FOB China","CIF Mariel","CIF Santiago de Cuba"]}},
+   es:{n:"Importación y suministros", ref:"Comercio exterior", i:["Gestión de embarque y documentación","Gestión comercial y documentación de importación","FOB China","CIF Mariel","CIF Santiago de Cuba","Carga aérea a La Habana y Santiago de Cuba"]},
+   en:{n:"Import and supply", ref:"Foreign trade", i:["Shipping and documentation management","Commercial management and import documentation","FOB China","CIF Mariel","CIF Santiago de Cuba","Air cargo to Havana and Santiago de Cuba"]}},
   {id:"exportacion", estado:"activo",
    es:{n:"Exportación", ref:"Comercio exterior", i:["Productos cubanos para el mercado externo","Gestión comercial y documentación de exportación"]},
    en:{n:"Export", ref:"Foreign trade", i:["Cuban products for foreign markets","Commercial management and export documentation"]}},
@@ -450,23 +453,23 @@ const EN = {
  "imp.tag":"Foreign trade","imp.h2":"Import and export","imp.p":"We import the goods you need, from the manufacturer to your warehouse or site, and export Cuban products to foreign markets. Quotes are given by port.",
  "imp.r1":"Origin","imp.r1d":"Purchase from the manufacturer with goods loaded at the port of shipment. We vet the manufacturer, certifications and samples before buying.",
  "imp.r2":"Western Cuba","imp.r2d":"Cost, insurance and freight to the Mariel Special Development Zone.",
- "imp.r3":"Eastern Cuba","imp.r4":"Shipping from Cuba","imp.r4d":"Shipment of Cuban products from Mariel or Santiago de Cuba, with documents and freight handled by us.","imp.r3d":"Cost, insurance and freight to the port of Santiago de Cuba.",
+ "imp.r3":"Eastern Cuba","imp.r4":"Shipping from Cuba","imp.r4c":"Export","imp.r5":"Havana · Santiago de Cuba","imp.r5d":"Urgent or high-value air shipments to the airports of Havana or Santiago de Cuba, with documents and freight handled by us.","imp.r4d":"Shipment of Cuban products from Mariel or Santiago de Cuba, with documents and freight handled by us.","imp.r3d":"Cost, insurance and freight to the port of Santiago de Cuba.",
  "st.1":"Requirement","st.1d":"Technical specification and quantities","st.2":"Selection","st.2d":"Vetted manufacturers and compared offers","st.3":"Purchase","st.3d":"Contract, samples and pre-shipment inspection","st.4":"Shipment","st.4d":"Sea freight, insurance and documents","st.5":"Delivery","st.5d":"Port clearance and transport to the client",
  "ob.tag":"Experience","ob.h2":"Completed projects","ob.p":"A selection of works carried out by our team.","ob.pend":"Photo pending","ob.1":"Project 1 · Name and location","ob.2":"Project 2 · Name and location","ob.3":"Project 3 · Name and location",
  "co.tag":"Who we are","co.h2":"The company","co.p1":"Malleuve & Rousseau S.R.L. is a Cuban private company engaged in wholesale and retail trade, with import and export as the pillars of its business.",
  "co.p2":"We manage each operation from start to finish: purchasing, documentation, shipping and delivery, so the client has a single point of contact throughout.",
  "lg.razon":"Company name","lg.forma":"Legal form","lg.forma.v":"Limited Liability Company (S.R.L.)","lg.nit":"Tax ID (NIT)","lg.dom":"Registered address","lg.dom.v":"Avenida Cebreco No. 310, between 11 and 13, Vista Alegre, Santiago de Cuba, Cuba","lg.zona":"Operating area","lg.zona.v":"All of Cuba, with an initial focus on the eastern region","pend":"Pending",
  "ct.tag":"Tell us what you need","ct.wa":"WhatsApp Cuba","ct.mail":"Email","ct.addr":"Address","ct.copy":"Copy",
- "f.name":"Name","f.phone":"Phone","f.type":"Client type","f.t1":"Individual","f.t2":"Private company (MSME)","f.t3":"State entity","f.t4":"Foreign investor","f.svc":"Service","f.prov":"Province","f.port":"Destination port (if importing)","f.p0":"Not applicable","f.msg":"Describe the goods, service or works needed","f.submit":"Prepare request",
+ "f.name":"Name","f.phone":"Phone","f.type":"Client type","f.t1":"Individual","f.t2":"Private company (MSME)","f.t3":"State entity","f.t4":"Foreign investor","f.svc":"Service","f.prov":"Province","f.port":"Destination port or airport (if importing)","f.p0":"Not applicable","f.p1":"Havana airport","f.p2":"Santiago de Cuba airport","f.msg":"Describe the goods, service or works needed","f.submit":"Prepare request",
  "adm.open":"Manage services","adm.tag":"Administration","adm.h2":"Service selector","adm.close":"Close","adm.p":"Active: visible and requestable. Coming soon: visible with a notice, no requests. Hidden: not shown on the site. Changes apply to all visitors.","adm.copy":"Copy configuration","adm.reset":"Reset"
 };
 const UI = {
  es:{soon:"Próximamente",prep:"En preparación",avail:"Disponible",ask:"Solicitar →",other:"Otro / varios servicios",of:" de ",st:[["activo","Activo"],["pronto","Próximamente"],["oculto","Oculto"]],
      copied:"Copiada",sel:"Texto seleccionado",err:"Escriba su nombre y una descripción de lo que necesita para preparar la solicitud.",
-     res:"Solicitud preparada (vista previa, aún no se envía):",lbl:["Nombre","Teléfono","Tipo de cliente","Servicio","Provincia","Puerto de destino"],fase:"Fase"},
+     res:"Solicitud preparada (vista previa, aún no se envía):",lbl:["Nombre","Teléfono","Tipo de cliente","Servicio","Provincia","Destino"],fase:"Fase"},
  en:{soon:"Coming soon",prep:"In preparation",avail:"Available",ask:"Request →",other:"Other / several services",of:" of ",st:[["activo","Active"],["pronto","Coming soon"],["oculto","Hidden"]],
      copied:"Copied",sel:"Text selected",err:"Enter your name and a description of what you need to prepare the request.",
-     res:"Request prepared (preview, not sent yet):",lbl:["Name","Phone","Client type","Service","Province","Destination port"],fase:"Phase"}
+     res:"Request prepared (preview, not sent yet):",lbl:["Name","Phone","Client type","Service","Province","Destination"],fase:"Phase"}
 };
 
 const KEY="mr-servicios", LKEY="mr-lang";
