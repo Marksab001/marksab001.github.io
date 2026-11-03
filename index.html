@@ -218,8 +218,8 @@ nav{margin-left:12px}
   <div class="wrap">
     <div>
       <span class="tag" data-i18n="hero.tag">Comercialización · Importación · Exportación</span>
-      <h1 data-i18n-html="hero.h1">Comercio que <em>conecta</em> a Cuba con el mundo</h1>
-      <p class="lead" data-i18n="hero.lead">Comercializamos al por mayor y al por menor, importamos las mercancías que su negocio necesita y llevamos productos cubanos a otros mercados. También construimos, rehabilitamos y mantenemos edificaciones e instalaciones.</p>
+      <h1 data-i18n-html="hero.h1"><em>CONECTANDO</em> con el mundo</h1>
+      <p class="lead" data-i18n="hero.lead">Comercialización mayorista y minorista. Importamos lo que su negocio necesita y exportamos sus productos y servicios.</p>
       <div class="ctas">
         <a class="btn btn-primary" href="#contacto" data-i18n="cta.quote">Solicitar cotización</a>
         <a class="btn btn-ghost" href="#servicios" data-i18n="cta.services">Ver servicios</a>
@@ -227,11 +227,12 @@ nav{margin-left:12px}
     </div>
     <div class="spec" aria-label="Ficha">
       <div><span data-i18n="spec.razon">Razón social</span><span>Malleuve &amp; Rousseau S.R.L.</span></div>
-      <div><span data-i18n="spec.tipo">Tipo</span><span data-i18n="spec.tipo.v">Empresa privada cubana</span></div>
+      <div><span data-i18n="spec.tipo">Tipo</span><span data-i18n="spec.tipo.v">MIPYME</span></div>
       <div><span data-i18n="spec.principal">Actividad principal</span><span data-i18n="spec.principal.v">Comercialización mayorista y minorista</span></div>
-      <div><span data-i18n="spec.pilares">Pilares</span><span data-i18n="spec.pilares.v">Importación · Exportación</span></div>
+      <div><span data-i18n="spec.pilares">Pilares</span><span data-i18n="spec.pilares.v">Importación · Exportación · Gestión documental</span></div>
       <div><span data-i18n="spec.activos">Servicios activos</span><span id="countActive">—</span></div>
       <div><span data-i18n="spec.puertos">Puertos</span><span>Mariel · Santiago de Cuba</span></div>
+      <div><span data-i18n="spec.aero">Aeropuertos</span><span>La Habana · Santiago de Cuba</span></div>
     </div>
   </div>
 </section>
@@ -254,8 +255,8 @@ nav{margin-left:12px}
     </div>
     <div class="routes">
       <div class="route"><span class="code">FOB China</span><h3 data-i18n="imp.r1">Origen</h3><p data-i18n="imp.r1d">Compra al fabricante con la mercancía cargada en el puerto de embarque. Validamos fabricante, certificaciones y muestras antes de comprar.</p></div>
-      <div class="route"><span class="code">CIF Mariel</span><h3 data-i18n="imp.r2">Occidente</h3><p data-i18n="imp.r2d">Costo, seguro y flete hasta la Zona Especial de Desarrollo Mariel. Destino para clientes de La Habana, Artemisa y Mayabeque.</p></div>
-      <div class="route"><span class="code">CIF Santiago</span><h3 data-i18n="imp.r3">Oriente</h3><p data-i18n="imp.r3d">Costo, seguro y flete hasta el puerto de Santiago de Cuba. Destino para clientes de las provincias orientales.</p></div>
+      <div class="route"><span class="code">CIF Mariel</span><h3 data-i18n="imp.r2">Occidente</h3><p data-i18n="imp.r2d">Costo, seguro y flete hasta la Zona Especial de Desarrollo Mariel.</p></div>
+      <div class="route"><span class="code">CIF Santiago</span><h3 data-i18n="imp.r3">Oriente</h3><p data-i18n="imp.r3d">Costo, seguro y flete hasta el puerto de Santiago de Cuba.</p></div>
       <div class="route"><span class="code">Exportación</span><h3 data-i18n="imp.r4">Salida desde Cuba</h3><p data-i18n="imp.r4d">Embarque de productos cubanos desde Mariel o Santiago de Cuba, con la documentación y el flete gestionados por nosotros.</p></div>
     </div>
     <ol class="steps" id="steps">
@@ -307,7 +308,7 @@ nav{margin-left:12px}
       <span class="tag" data-i18n="co.tag">Quiénes somos</span>
       <h2 style="margin-bottom:20px" data-i18n="co.h2">La empresa</h2>
       <p data-i18n="co.p1">Malleuve &amp; Rousseau S.R.L. es una empresa privada cubana dedicada a la comercialización mayorista y minorista, con la importación y la exportación como pilares de su actividad.</p>
-      <p data-i18n="co.p2">Completamos el comercio con servicios de construcción, instalaciones, suministro de materiales y transporte de carga. Así el cliente tiene un único interlocutor, desde la compra de la mercancía hasta su entrega o su puesta en obra.</p>
+      <p data-i18n="co.p2">Gestionamos cada operación de principio a fin: compra, documentación, embarque y entrega. Así el cliente tiene un único interlocutor durante todo el proceso.</p>
     </div>
     <div class="legal">
       <div><span class="k" data-i18n="lg.razon">Razón social</span><span>Malleuve &amp; Rousseau S.R.L.</span></div>
@@ -391,42 +392,42 @@ nav{margin-left:12px}
    Para añadir un servicio futuro, agregue un objeto con textos en español (es) e inglés (en). */
 const SERVICIOS = [
   {id:"mayorista", estado:"activo",
-   es:{n:"Comercialización mayorista", ref:"Comercialización", i:["Venta por volumen a empresas","Suministro a negocios y entidades","Mercancías importadas y nacionales"]},
-   en:{n:"Wholesale trade", ref:"Trade", i:["Volume sales to businesses","Supply to companies and entities","Imported and domestic goods"]}},
+   es:{n:"Comercialización mayorista", ref:"Comercialización", i:["Venta y suministro a todos los actores económicos","Productos importados y nacionales"]},
+   en:{n:"Wholesale trade", ref:"Trade", i:["Sales and supply to all economic actors","Imported and domestic products"]}},
   {id:"minorista", estado:"activo",
-   es:{n:"Comercialización minorista", ref:"Comercialización", i:["Venta directa al cliente","Productos para el hogar y la obra"]},
-   en:{n:"Retail trade", ref:"Trade", i:["Direct sales to customers","Products for home and building"]}},
-  {id:"exportacion", estado:"activo",
-   es:{n:"Exportación", ref:"Comercio exterior", i:["Productos cubanos para mercados externos","Gestión de embarque y documentación"]},
-   en:{n:"Export", ref:"Foreign trade", i:["Cuban products for foreign markets","Shipping and documentation management"]}},
+   es:{n:"Comercialización minorista", ref:"Comercialización", i:["Venta directa a personas naturales"]},
+   en:{n:"Retail trade", ref:"Trade", i:["Direct sales to individuals"]}},
   {id:"importacion", estado:"activo", seccion:"importacion",
-   es:{n:"Importación y suministro", ref:"Comercio exterior", i:["FOB China","CIF Mariel","CIF Santiago de Cuba"]},
-   en:{n:"Import and supply", ref:"Foreign trade", i:["FOB China","CIF Mariel","CIF Santiago de Cuba"]}},
-  {id:"construccion", estado:"activo",
+   es:{n:"Importación y suministros", ref:"Comercio exterior", i:["Gestión de embarque y documentación","Gestión comercial y documentación de importación","FOB China","CIF Mariel","CIF Santiago de Cuba"]},
+   en:{n:"Import and supply", ref:"Foreign trade", i:["Shipping and documentation management","Commercial management and import documentation","FOB China","CIF Mariel","CIF Santiago de Cuba"]}},
+  {id:"exportacion", estado:"activo",
+   es:{n:"Exportación", ref:"Comercio exterior", i:["Productos cubanos para el mercado externo","Gestión comercial y documentación de exportación"]},
+   en:{n:"Export", ref:"Foreign trade", i:["Cuban products for foreign markets","Commercial management and export documentation"]}},
+  {id:"construccion", estado:"oculto",
    es:{n:"Construcción y montaje de obras", ref:"Construcción", i:["Edificaciones nuevas","Montaje de instalaciones","Obras civiles"]},
    en:{n:"Construction and assembly works", ref:"Construction", i:["New buildings","Installation assembly","Civil works"]}},
-  {id:"rehabilitacion", estado:"activo",
+  {id:"rehabilitacion", estado:"oculto",
    es:{n:"Rehabilitación y mantenimiento", ref:"Construcción", i:["Demolición y desmontaje","Remodelación y restauración","Preparación del terreno"]},
    en:{n:"Rehabilitation and maintenance", ref:"Construction", i:["Demolition and dismantling","Remodeling and restoration","Site preparation"]}},
-  {id:"terminaciones", estado:"activo",
+  {id:"terminaciones", estado:"oculto",
    es:{n:"Terminaciones y acabados", ref:"Construcción", i:["Pisos, enchapes y falsos techos","Carpintería y pintura","Trabajos especializados"]},
    en:{n:"Finishing works", ref:"Construction", i:["Flooring, tiling and suspended ceilings","Carpentry and painting","Specialized works"]}},
-  {id:"instalaciones", estado:"activo",
+  {id:"instalaciones", estado:"oculto",
    es:{n:"Instalaciones técnicas", ref:"Instalaciones", i:["Eléctricas","Hidrosanitarias","Climatización"]},
    en:{n:"Building services", ref:"Building services", i:["Electrical","Plumbing and sanitation","Air conditioning"]}},
   {id:"andamios", estado:"activo",
-   es:{n:"Andamios y plataformas", ref:"Equipos de obra", i:["Montaje y desmontaje","Alquiler de andamios","Plataformas de trabajo"]},
-   en:{n:"Scaffolding and platforms", ref:"Site equipment", i:["Erection and dismantling","Scaffolding rental","Work platforms"]}},
-  {id:"materiales", estado:"activo", seccion:"materiales",
+   es:{n:"Andamios y plataformas", ref:"Servicios", i:["Montaje, desmontaje y alquiler de andamios y plataformas"]},
+   en:{n:"Scaffolding and platforms", ref:"Services", i:["Erection, dismantling and rental of scaffolding and platforms"]}},
+  {id:"materiales", estado:"oculto", seccion:"materiales",
    es:{n:"Materiales, ferretería y pinturas", ref:"Suministro", i:["Producción propia","Comercialización","Fontanería y vidrio"]},
    en:{n:"Materials, hardware and paints", ref:"Supply", i:["Own production","Trading","Plumbing and glass"]}},
-  {id:"limpieza", estado:"activo",
+  {id:"limpieza", estado:"oculto",
    es:{n:"Limpieza industrial", ref:"Servicios", i:["Edificios","Instalaciones industriales","Limpieza fin de obra"]},
    en:{n:"Industrial cleaning", ref:"Services", i:["Buildings","Industrial facilities","Post-construction cleaning"]}},
-  {id:"transporte", estado:"activo",
+  {id:"transporte", estado:"oculto",
    es:{n:"Transporte de carga", ref:"Logística", i:["Carga por carretera","Traslado de materiales a obra"]},
    en:{n:"Freight transport", ref:"Logistics", i:["Road freight","Delivery of materials to site"]}},
-  {id:"jardineria", estado:"activo",
+  {id:"jardineria", estado:"oculto",
    es:{n:"Jardinería y paisajismo", ref:"Servicios", i:["Áreas verdes","Paisajismo","Mantenimiento"]},
    en:{n:"Gardening and landscaping", ref:"Services", i:["Green areas","Landscaping","Maintenance"]}},
   /* Secciones del sitio (no son servicios): solo Activo u Oculto */
@@ -438,22 +439,22 @@ const SERVICIOS = [
 const EN = {
  "nav.menu":"Menu","nav.servicios":"Services","nav.materiales":"Materials","nav.importacion":"Foreign trade","nav.obras":"Projects","nav.empresa":"Company","nav.contacto":"Contact",
  "hero.tag":"Trade · Import · Export",
- "hero.h1":"Trade that <em>connects</em> Cuba with the world",
- "hero.lead":"We sell wholesale and retail, import the goods your business needs and take Cuban products to other markets. We also build, rehabilitate and maintain buildings and facilities.",
+ "hero.h1":"<em>CONNECTING</em> with the world",
+ "hero.lead":"Wholesale and retail trade. We import what your business needs and export your products and services.",
  "cta.quote":"Request a quote","cta.services":"See services",
- "spec.razon":"Company name","spec.tipo":"Type","spec.tipo.v":"Cuban private company","spec.principal":"Main activity","spec.principal.v":"Wholesale and retail trade","spec.pilares":"Pillars","spec.pilares.v":"Import · Export","spec.activos":"Active services","spec.puertos":"Ports",
+ "spec.razon":"Company name","spec.tipo":"Type","spec.tipo.v":"MSME (MIPYME)","spec.principal":"Main activity","spec.principal.v":"Wholesale and retail trade","spec.pilares":"Pillars","spec.pilares.v":"Import · Export · Documentation management","spec.activos":"Active services","spec.puertos":"Ports","spec.aero":"Airports",
  "svc.tag":"What we do","svc.h2":"Services","svc.p":"Choose the service you need and we will prepare a proposal tailored to your project.",
  "mat.tag":"Supply","mat.h2":"Materials and hardware","mat.p":"We produce and sell construction materials. Prices are quoted according to volume, specification and delivery location.",
  "mat.1":"Construction materials","mat.1d":"Aggregates, cement, blocks and building elements","mat.2":"Paints","mat.2d":"Interior, exterior and waterproofing","mat.3":"Hardware","mat.3d":"Fittings, fasteners and tools","mat.4":"Plumbing and heating","mat.4d":"Pipes, connections, faucets and equipment","mat.5":"Glass products","mat.5d":"Flat glass and joinery elements","mat.6":"Precast elements","mat.6d":"Items of our own production",
  "mat.note":"We do not sell products from the retail network or items prohibited by law.",
  "imp.tag":"Foreign trade","imp.h2":"Import and export","imp.p":"We import the goods you need, from the manufacturer to your warehouse or site, and export Cuban products to foreign markets. Quotes are given by port.",
  "imp.r1":"Origin","imp.r1d":"Purchase from the manufacturer with goods loaded at the port of shipment. We vet the manufacturer, certifications and samples before buying.",
- "imp.r2":"Western Cuba","imp.r2d":"Cost, insurance and freight to the Mariel Special Development Zone. Destination for clients in Havana, Artemisa and Mayabeque.",
- "imp.r3":"Eastern Cuba","imp.r4":"Shipping from Cuba","imp.r4d":"Shipment of Cuban products from Mariel or Santiago de Cuba, with documents and freight handled by us.","imp.r3d":"Cost, insurance and freight to the port of Santiago de Cuba. Destination for clients in the eastern provinces.",
+ "imp.r2":"Western Cuba","imp.r2d":"Cost, insurance and freight to the Mariel Special Development Zone.",
+ "imp.r3":"Eastern Cuba","imp.r4":"Shipping from Cuba","imp.r4d":"Shipment of Cuban products from Mariel or Santiago de Cuba, with documents and freight handled by us.","imp.r3d":"Cost, insurance and freight to the port of Santiago de Cuba.",
  "st.1":"Requirement","st.1d":"Technical specification and quantities","st.2":"Selection","st.2d":"Vetted manufacturers and compared offers","st.3":"Purchase","st.3d":"Contract, samples and pre-shipment inspection","st.4":"Shipment","st.4d":"Sea freight, insurance and documents","st.5":"Delivery","st.5d":"Port clearance and transport to the client",
  "ob.tag":"Experience","ob.h2":"Completed projects","ob.p":"A selection of works carried out by our team.","ob.pend":"Photo pending","ob.1":"Project 1 · Name and location","ob.2":"Project 2 · Name and location","ob.3":"Project 3 · Name and location",
  "co.tag":"Who we are","co.h2":"The company","co.p1":"Malleuve & Rousseau S.R.L. is a Cuban private company engaged in wholesale and retail trade, with import and export as the pillars of its business.",
- "co.p2":"We complement trade with construction, building services, materials supply and freight transport, so the client has a single point of contact from purchasing the goods to delivery or installation.",
+ "co.p2":"We manage each operation from start to finish: purchasing, documentation, shipping and delivery, so the client has a single point of contact throughout.",
  "lg.razon":"Company name","lg.forma":"Legal form","lg.forma.v":"Limited Liability Company (S.R.L.)","lg.nit":"Tax ID (NIT)","lg.dom":"Registered address","lg.dom.v":"Avenida Cebreco No. 310, between 11 and 13, Vista Alegre, Santiago de Cuba, Cuba","lg.zona":"Operating area","lg.zona.v":"All of Cuba, with an initial focus on the eastern region","pend":"Pending",
  "ct.tag":"Tell us what you need","ct.wa":"WhatsApp Cuba","ct.mail":"Email","ct.addr":"Address","ct.copy":"Copy",
  "f.name":"Name","f.phone":"Phone","f.type":"Client type","f.t1":"Individual","f.t2":"Private company (MSME)","f.t3":"State entity","f.t4":"Foreign investor","f.svc":"Service","f.prov":"Province","f.port":"Destination port (if importing)","f.p0":"Not applicable","f.msg":"Describe the goods, service or works needed","f.submit":"Prepare request",
