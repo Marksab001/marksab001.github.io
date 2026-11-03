@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="mr-build" content="1793676455">
+<meta name="mr-build" content="1793676756">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Malleuve & Rousseau</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -452,7 +452,7 @@ footer .admin-link{background:none;border:1px solid rgba(255,255,255,.3);color:#
           <option value="Fuera de Cuba" data-i18n="f.pvx">Fuera de Cuba</option>
         </select>
       </div>
-      <div class="field"><span id="l-port" data-i18n="f.port">Destino de la mercancía</span>
+      <div class="field" id="w-port" hidden><span id="l-port" data-i18n="f.port">Destino de la mercancía</span>
         <select id="f-port" hidden aria-labelledby="l-port">
           <option value="na" data-i18n="f.p0">No aplica</option>
           <option value="mariel" data-i18n="f.pm">Puerto Mariel</option>
@@ -743,6 +743,7 @@ function render(){
   if([...sel.options].some(x=>x.value===prev))sel.value=prev;
   document.getElementById("countActive").textContent=activos;
   ddRefreshAll();
+  verDestino();
   renderAdmin();
 }
 
@@ -767,7 +768,8 @@ document.getElementById("rows").addEventListener("click",e=>{
 });
 document.getElementById("svcGrid").addEventListener("click",e=>{
   const b=e.target.closest(".ask");if(!b)return;
-  const fs=document.getElementById("f-svc");fs.value=b.dataset.id;if(fs.selectedIndex<0||fs.value!==b.dataset.id){const o=[...fs.options].find(x=>x.value.startsWith(b.dataset.id+"-"));if(o)fs.value=o.value}ddRefresh(document.getElementById("f-svc"));
+  const fs=document.getElementById("f-svc");fs.value=b.dataset.id;if(fs.selectedIndex<0||fs.value!==b.dataset.id){const o=[...fs.options].find(x=>x.value.startsWith(b.dataset.id+"-"));if(o)fs.value=o.value}
+  verDestino();ddRefresh(document.getElementById("f-svc"));
   document.getElementById("contacto").scrollIntoView({behavior:"smooth"});
   (document.querySelector("#quote [data-for]:not([hidden]) input")||document.getElementById("f-msg")).focus({preventScroll:true});
 });
@@ -792,6 +794,10 @@ const menuBtn=document.getElementById("menuBtn"),nav=document.getElementById("na
 menuBtn.onclick=()=>{const o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)};
 nav.addEventListener("click",e=>{if(e.target.tagName==="A"){nav.classList.remove("open");menuBtn.setAttribute("aria-expanded","false")}});
 
+/* El destino de la mercancía solo se pide cuando el servicio es Importación */
+function verDestino(){const svc=document.getElementById("f-svc"),w=document.getElementById("w-port");if(!svc||!w)return;
+  const imp=svc.value==="importacion";w.hidden=!imp;if(!imp){const p=document.getElementById("f-port");if(p.value!=="na"){p.value="na";if(typeof ddRefresh==="function")ddRefresh(p)}}}
+document.getElementById("f-svc").addEventListener("change",verDestino);
 function tipoSel(){return document.querySelector('input[name="tipo"]:checked').value}
 function aplicarTipo(){
   const t=tipoSel();
@@ -830,9 +836,8 @@ document.getElementById("quote").addEventListener("submit",e=>{
     [lbl("f-phone2"),tel("f-cc2","f-phone2")],
     [lbl("f-email"),v("f-email")||"—"],
     [lbl("f-svc"),txt("f-svc")],
-    [lbl("f-prov"),v("f-prov")?txt("f-prov"):"—"],
-    [lbl("f-port"),txt("f-port")]
-  ];
+    [lbl("f-prov"),v("f-prov")?txt("f-prov"):"—"]
+  ].concat(el("f-svc").value==="importacion"?[[lbl("f-port"),txt("f-port")]]:[]);
   const cuerpo=t.subj+" — Malleuve & Rousseau S.R.L.\n\n"+lines.map(([k,x])=>k+": "+x).join("\n")+"\n\n"+v("f-msg");
   const quien=tipo==="jur"?v("f-company"):v("f-names");
   out.innerHTML="";
